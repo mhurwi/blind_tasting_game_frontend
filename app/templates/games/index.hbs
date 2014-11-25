@@ -1,0 +1,19 @@
+Select a game to prepare or play:
+{{#each }}
+  <ul>
+    <li>{{name}}</li>
+    <li>{{#link-to 'games.show' this}}Manage Game{{/link-to}}</li>
+    <li>
+      {{#if prepared }}
+        {{#link-to 'games.play' this}}Play{{/link-to}}
+      {{ else}}
+        <span>not ready to play!</span>
+      {{/if}}
+    </li>
+  </ul>
+{{/each}}
+
+{{ outlet }}
+
+Or, create new game:
+<p>{{#link-to 'games.new' }}Create New Game{{/link-to}}</p>

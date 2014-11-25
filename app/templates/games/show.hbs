@@ -1,0 +1,33 @@
+<h4>Game Master View</h4>
+<p>This is the page for a game master to setup and monitor a game.</p>
+<p>Players should not be allowed to see this game.  They should got to the /games/:game_id/play page.</p>
+<p>Game: {{ name }}</p>
+
+<p>Materials:</p>
+{{#each material in materials}}
+  <p>{{material.id}} -- {{material.name}}</p>
+{{/each}}
+
+{{#if prepared }}
+  <p>Ready to play</p>
+
+  <p>Players:</p>
+  <p>TODO: list all players</p>
+
+{{else}}
+  <p>Not ready to play!</p>
+  <p>need to add materials to game</p>
+
+  <form>
+  {{input
+    type="text"
+    id="new-material"
+    placeholder="Name of material..."
+    value=materialName
+  }}
+  <button type="submit" {{action "addMaterial"}}>Add Material</button>
+</form>
+
+<button {{action "setPrepared"}}>All set!</button>
+
+{{/if}}

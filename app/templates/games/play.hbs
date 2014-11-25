@@ -1,0 +1,21 @@
+You will be tasting: {{ name }}
+
+
+<ul>
+  {{#each unknown_material in materials}}
+    <li>
+      <button {{action "toggleChoices" unknown_material.id}}>{{unknown_material.id}}</button>
+    </li>
+  {{/each}}
+</ul>
+
+{{#if showChoices}}
+  <p>TODO: sort choices by random</p>
+  <ul>
+    {{#each material in materials}}
+      <li>
+        <button {{action "guessMaterial" material.id}}>{{material.name}}</button>
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
