@@ -1,21 +1,48 @@
-You will be tasting: {{ name }}
+<div class="row">
+  <div class="col-sm-12">
+    You are tasting: {{ name }}
+  </div>
+</div>
 
-
-<ul>
-  {{#each unknown_material in materials}}
-    <li>
-      <button {{action "toggleChoices" unknown_material.id}}>{{unknown_material.id}}</button>
-    </li>
-  {{/each}}
-</ul>
-
-{{#if showChoices}}
-  <p>TODO: sort choices by random</p>
-  <ul>
-    {{#each material in materials}}
-      <li>
-        <button {{action "guessMaterial" material.id}}>{{material.name}}</button>
-      </li>
-    {{/each}}
-  </ul>
+{{#if hasGuessed}}
+<div class="row">
+  <div class="col-sm-12">
+    {{#if correctGuess}}
+      <p>You got it right!</p>
+    {{else}}
+      <p>wrong</p>
+    {{/if}}
+  </div>
+</div>
 {{/if}}
+
+
+<div class="row">
+  <div class="col-sm-12">
+    {{ testStuff}}
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="btn-group">
+      {{#each unknown_material in materials}}
+          <button type="button" class="btn btn-primary" {{action "toggleChoices" unknown_material.id }}>{{unknown_material.id}}</button>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  {{#if showChoices}}
+    <ul class="list-group">
+      {{#each material in randomMaterials}}
+        <li class="list-group-item col-xs-6">
+          <button {{action "guessMaterial" material.id}}>{{material.name}}</button>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>

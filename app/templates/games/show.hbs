@@ -1,12 +1,22 @@
-<h4>Game Master View</h4>
-<p>This is the page for a game master to setup and monitor a game.</p>
-<p>Players should not be allowed to see this game.  They should got to the /games/:game_id/play page.</p>
-<p>Game: {{ name }}</p>
+<div class="row">
+  <div class="col-sm-12">
+    <h4>Game Master View</h4>
+    <p>This is the page for a game master to setup and monitor a game.</p>
+    <p>Players should not be allowed to see this game.  They should got to the /games/:game_id/play page.</p>
+  </div>
+</div>
 
-<p>Materials:</p>
-{{#each material in materials}}
-  <p>{{material.id}} -- {{material.name}}</p>
-{{/each}}
+<div class="panel">
+  <div class="panel-heading">
+    <h3>Game: {{ name }}</h3>
+  </div>
+  <div class="panel-body">
+    <p>Materials:</p>
+    {{#each material in materials}}
+      <p>{{material.id}} -- {{material.name}}</p>
+    {{/each}}
+  </div>
+</div>
 
 {{#if prepared }}
   <p>Ready to play</p>
