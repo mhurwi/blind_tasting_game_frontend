@@ -9,7 +9,10 @@ var Game = DS.Model.extend({
   prepared: DS.attr('boolean'),
 
   // stuff that will be tasted in this game
-  materials: DS.hasMany('material', {async: true})
+  materials: DS.hasMany('material', {async: true}),
+
+  // to track points
+  answers: DS.hasMany('answer', {async: true})
 });
 
 Game.reopenClass({

@@ -9,6 +9,7 @@ export default Ember.ObjectController.extend({
   guess: null,
   randomMaterials: [],
 
+
   actions: {
     // player has tasted a drink and they click the number of the drink they tasted,
     // so they should see the possible names of the drink they just tasted
@@ -26,14 +27,35 @@ export default Ember.ObjectController.extend({
         this.set("hasGuessed", true)
         this.set('currentlyTasting', null);
         this.set('showChoices', false);
-        alert(params.material_id)
+
+        // add answer
+        var answer = this.store.createRecord('answer',{
+          guessed_material_id: material_id,
+          actual_material_id: material_id,
+          user_id: null
+        });
+        answer.save();
+        this.get("model.answers").pushObject(answer);
+
       } else {
         this.set("correctGuess", false)
         this.set("hasGuessed", true)
         this.set('currentlyTasting', null);
         this.set('showChoices', false);
+
+        // TODO: refactor this, and the same 'add answer' code from above
+        // into a method within this controller
+        // add answer
+        var answer = this.store.createRecord('answer',{
+          guessed_material_id: this.get('currentlyTasting'),
+          actual_material_id: material_id,
+          user_id: null
+        });
+        answer.save();
+        this.get("model.answers").pushObject(answer);
       }
     }
+
   },
 
   // we want to shuffle the materials so the player really has to guess
