@@ -17,3 +17,8 @@ Select a game to prepare or play:
 
 Or, create new game:
 <p>{{#link-to 'games.new' }}Create New Game{{/link-to}}</p>
+
+<hr>
+<strong>Logged in</strong>
+<p>User ID: {{ session.user.uid }}</p>
+<button type="button" class="btn btn-warning"{{ action "logout" }}>Logout</button>

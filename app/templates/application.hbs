@@ -9,9 +9,12 @@
   {{outlet}}
 
 
-  <div class="row">
-    <div class="col-sm-12">
-    <p>{{#link-to 'games' class="btn btn-primary"}}Home{{/link-to}}</p>
+  {{#if session.user }}
+    <div class="row">
+      <div class="col-sm-12">
+      <p>{{#link-to 'games' class="btn btn-primary"}}Home{{/link-to}}</p>
+      </div>
     </div>
-  </div>
+  {{/if}}
+
 </div>
