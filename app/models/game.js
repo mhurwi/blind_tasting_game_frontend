@@ -15,6 +15,7 @@ var Game = DS.Model.extend({
   answers: DS.hasMany('answer', {async: true})
 });
 
+// Need to add /app/adapters/game.js and specificy the FixturesAdapter to use these:
 Game.reopenClass({
   FIXTURES: [
     {

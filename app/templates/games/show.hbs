@@ -6,16 +6,34 @@
   </div>
 </div>
 
-<div class="panel">
+<div class="panel panel-default">
   <div class="panel-heading">
     <h3>Game: {{ name }}</h3>
   </div>
   <div class="panel-body">
-    <p>Materials:</p>
-    {{#each material in materials}}
-      <p>{{material.id}} -- {{material.name}}</p>
-    {{/each}}
+    <p>Tasting:</p>
+    <table class="table">
+      <tbody>
+        {{#each material in materials}}
+        <tr>
+          <td>{{material.name}}</td>
+          <td>{{material.position}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <hr>
+    <form>
+      {{input
+        type="text"
+        id="new-material"
+        placeholder="Name of material..."
+        value=materialName
+      }}
+      <button type="submit" {{action "addMaterial"}}>Add Material</button>
+    </form>
   </div>
+
 </div>
 
 {{#if prepared }}
@@ -27,16 +45,6 @@
 {{else}}
   <p>Not ready to play!</p>
   <p>need to add materials to game</p>
-
-  <form>
-  {{input
-    type="text"
-    id="new-material"
-    placeholder="Name of material..."
-    value=materialName
-  }}
-  <button type="submit" {{action "addMaterial"}}>Add Material</button>
-</form>
 
 <button {{action "setPrepared"}}>All set!</button>
 

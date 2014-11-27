@@ -28,7 +28,7 @@
   <div class="col-sm-12">
     <div class="btn-group">
       {{#each unknown_material in materials}}
-          <button type="button" class="btn btn-primary" {{action "toggleChoices" unknown_material.id }}>{{unknown_material.id}}</button>
+          <button type="button" class="btn btn-primary" {{action "toggleChoices" unknown_material.id }}>{{unknown_material.position}}</button>
       {{/each}}
     </div>
   </div>

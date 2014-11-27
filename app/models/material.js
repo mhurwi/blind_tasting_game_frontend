@@ -2,6 +2,7 @@ import DS from 'ember-data';
 
 var Material = DS.Model.extend({
   name: DS.attr(),
+  position: DS.attr(),
   game: DS.belongsTo('game', {async: true})
 });
 

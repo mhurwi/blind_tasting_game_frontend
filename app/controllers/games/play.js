@@ -9,7 +9,6 @@ export default Ember.ObjectController.extend({
   guess: null,
   randomMaterials: [],
 
-
   actions: {
     // player has tasted a drink and they click the number of the drink they tasted,
     // so they should see the possible names of the drink they just tasted
@@ -21,6 +20,7 @@ export default Ember.ObjectController.extend({
 
     // player is guessing that the drink they just tasted is this material
     guessMaterial: function(material_id) {
+      var game = this.get("model");
       this.set('guess', material_id)
       if( this.get('guess') == this.get('currentlyTasting') ) {
         this.set("correctGuess", true)
@@ -49,10 +49,16 @@ export default Ember.ObjectController.extend({
         var answer = this.store.createRecord('answer',{
           guessed_material_id: this.get('currentlyTasting'),
           actual_material_id: material_id,
+          game: game,
           user_id: null
         });
+
         answer.save();
-        this.get("model.answers").pushObject(answer);
+
+        game.get("answers").then(function(answers){
+          answers.pushObject(answer);
+          game.save();
+        })
       }
     }
 
