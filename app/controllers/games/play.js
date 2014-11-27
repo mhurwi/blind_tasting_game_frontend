@@ -13,76 +13,71 @@ export default Ember.ObjectController.extend({
     // player has tasted a drink and they click the number of the drink they tasted,
     // so they should see the possible names of the drink they just tasted
     toggleChoices: function(unknown_material_id) {
+      var game = this.get('model');
       this.set('currentlyTasting', unknown_material_id);
-      this.set('randomMaterials', this.shuffle(this.get('model.materials').toArray()) );
+      this.set('randomMaterials', this.shuffle(game.get('materials').toArray()) );
       this.set('showChoices', true );
     },
 
     // player is guessing that the drink they just tasted is this material
     guessMaterial: function(material_id) {
+      this.set('guess', material_id);
+
       var game = this.get("model");
-      this.set('guess', material_id)
-      if( this.get('guess') == this.get('currentlyTasting') ) {
-        this.set("correctGuess", true)
-        this.set("hasGuessed", true)
-        this.set('currentlyTasting', null);
-        this.set('showChoices', false);
+      var tastingId = this.get('currentlyTasting');
+      var guessId = material_id;
 
-        // add answer
-        var answer = this.store.createRecord('answer',{
-          guessed_material_id: material_id,
-          actual_material_id: material_id,
-          user_id: null
-        });
-        answer.save();
-        this.get("model.answers").pushObject(answer);
+      // create the answer in the db
+      this.add_answer(game, tastingId, material_id);
 
+      // cleanup controller
+      this.set("hasGuessed", true);
+      this.set('currentlyTasting', null);
+      this.set('showChoices', false);
+
+      if( guessId === tastingId ) {
+        this.set("correctGuess", true);
       } else {
-        this.set("correctGuess", false)
-        this.set("hasGuessed", true)
-        this.set('currentlyTasting', null);
-        this.set('showChoices', false);
-
-        // TODO: refactor this, and the same 'add answer' code from above
-        // into a method within this controller
-        // add answer
-        var answer = this.store.createRecord('answer',{
-          guessed_material_id: this.get('currentlyTasting'),
-          actual_material_id: material_id,
-          game: game,
-          user_id: null
-        });
-
-        answer.save();
-
-        game.get("answers").then(function(answers){
-          answers.pushObject(answer);
-          game.save();
-        })
+        this.set("correctGuess", false);
       }
     }
-
   },
 
   // we want to shuffle the materials so the player really has to guess
   shuffle: function(array) {
 
-      var currentIndex = array.length, temporaryValue, randomIndex ;
+    var currentIndex = array.length, temporaryValue, randomIndex ;
 
-      // While there remain elements to shuffle...
-      while (0 !== currentIndex) {
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
 
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
 
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-      }
-
-      return array;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
 
+    return array;
+  },
+
+  // save every answer to the db
+  add_answer: function(game, tastingId, guessId) {
+    var answer = this.store.createRecord('answer', {
+      guessed_material_id: tastingId,
+      actual_material_id: guessId,
+      game: game,
+      user_id: null
+    });
+
+    answer.save();
+
+    game.get("answers").then(function(answers){
+      answers.pushObject(answer);
+      game.save();
+    });
+  }
 });

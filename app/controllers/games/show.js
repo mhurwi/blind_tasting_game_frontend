@@ -24,7 +24,9 @@ export default Ember.ObjectController.extend({
     },
 
     setPrepared: function() {
-      this.set("model.prepared", true)
+      var game = this.get('model');
+      game.set("prepared", true);
+      game.save();
     }
   }
 });

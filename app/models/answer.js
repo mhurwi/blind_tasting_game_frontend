@@ -7,11 +7,9 @@ var Answer = DS.Model.extend({
   user_id: DS.attr('string'),
   game: DS.belongsTo('game'),
 
-  actions: {
-    isCorrect: function() {
-      return this.get('guessed_material_id') == this.get('actual_material_id')
-    }
-  }
+  isCorrect: function() {
+    return this.get('guessed_material_id') === this.get('actual_material_id');
+  }.property('guessed_material_id', 'actual_material_id')
 });
 
 export default Answer;
