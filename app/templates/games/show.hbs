@@ -5,19 +5,26 @@
     <p>Players should not be allowed to see this game.  They should got to the /games/:game_id/play page.</p>
   </div>
 </div>
-
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3>Game: {{ name }}</h3>
+    <h3>Tasting: {{ name }}</h3>
   </div>
   <div class="panel-body">
-    <p>Tasting:</p>
+    <p>Stuff to be tasted:</p>
     <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Position</th>
+          <th></th>
+        </tr>
+      </thead>
       <tbody>
         {{#each material in materials}}
         <tr>
           <td>{{material.name}}</td>
           <td>{{material.position}}</td>
+          <td><i class="fontastic-trash" {{ action 'removeMaterial' material.id }}></i></td>
         </tr>
         {{/each}}
       </tbody>
@@ -25,26 +32,30 @@
     <hr>
     <form>
       {{input
-        type="text"
-        id="new-material"
-        placeholder="Name of material..."
-        value=materialName
+      type="text"
+      id="new-material"
+      placeholder="Name of material..."
+      value=materialName
       }}
-      <button type="submit" {{action "addMaterial"}}>Add Material</button>
+      <button type="submit" class="btn btn-default" {{action "addMaterial" }}>Add Material</button>
     </form>
+    <div>
+      {{#if prepared }}
+        <p><span class="label label-success">Ready to play</span></p>
+      {{else}}
+        <p>Add some materials.</p>
+        <p>When you've added them all, click 'All Set!'</p>
+        <p>
+          <button class="btn btn-large btn-success" {{action "setPrepared"}}>All set!</button>
+        </p>
+      {{/if}}
+    </div>
   </div>
-
 </div>
-
-{{#if prepared }}
-  <p>Ready to play</p>
-
-  {{!-- <p>TODO: list all players</p> --}}
-
-{{else}}
-  <p>Not ready to play!</p>
-  <p>need to add materials to game</p>
-
-<button {{action "setPrepared"}}>All set!</button>
-
-{{/if}}
+<div class="row">
+  <div class="col-sm-12">
+    <p>
+    <button class="btn btn-small btn-danger" {{ action "deleteGame" }}>Delete Game</button>
+    </p>
+  </div>
+</div>

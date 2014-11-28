@@ -1,24 +1,27 @@
-Select a game to prepare or play:
 {{#each }}
-  <ul>
-    <li>{{name}}</li>
-    <li>{{#link-to 'games.show' this}}Manage Game{{/link-to}}</li>
-    <li>
-      {{#if prepared }}
-        {{#link-to 'games.play' this}}Play{{/link-to}}
-      {{ else}}
-        <span>not ready to play!</span>
-      {{/if}}
-    </li>
-  </ul>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>Tasting: {{name}}</h2>
+      </div>
+      <div class="panel-body">
+        {{#if prepared }}
+          <p>
+            {{#link-to 'games.play' this class="btn btn-success"}}Play{{/link-to}}
+          </p>
+        {{ else}}
+          <p>not ready to play!</p>
+        {{/if}}
+
+        <p>{{#link-to 'games.show' this}}Manage Game{{/link-to}}</p>
+      </div>
+    </div>
 {{/each}}
 
 {{ outlet }}
 
-Or, create new game:
+<br>
 <p>{{#link-to 'games.new' }}Create New Game{{/link-to}}</p>
 
 <hr>
-<strong>Logged in</strong>
-<p>User ID: {{ session.user.uid }}</p>
 <button type="button" class="btn btn-warning"{{ action "logout" }}>Logout</button>
+<p class="text-muted">User ID: {{ session.user.uid }}</p>
