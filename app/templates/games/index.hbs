@@ -11,8 +11,9 @@
         {{ else}}
           <p>not ready to play!</p>
         {{/if}}
-
-        <p>{{#link-to 'games.show' this}}Manage Game{{/link-to}}</p>
+      </div>
+      <div class="panel-footer">
+        <p>{{#link-to 'games.show' this class="text-muted"}}Manage Game{{/link-to}}</p>
       </div>
     </div>
 {{/each}}
