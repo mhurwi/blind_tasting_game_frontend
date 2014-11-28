@@ -9,6 +9,9 @@ export default Ember.ObjectController.extend({
   guess: null,
   randomMaterials: [],
 
+  correctGuesses: [],
+  wrongGuesses: [],
+
   actions: {
     // player has tasted a drink and they click the number of the drink they tasted,
     // so they should see the possible names of the drink they just tasted
@@ -17,6 +20,14 @@ export default Ember.ObjectController.extend({
       this.set('currentlyTasting', unknown_material_id);
       this.set('randomMaterials', this.shuffle(game.get('materials').toArray()) );
       this.set('showChoices', true );
+
+      $(".unknown-material-list li").each(function(index){
+        $(this).removeClass("active");
+      });
+
+      var item = $("li#" + unknown_material_id);
+      item.addClass("active");
+
     },
 
     // player is guessing that the drink they just tasted is this material
@@ -26,6 +37,7 @@ export default Ember.ObjectController.extend({
       var game = this.get("model");
       var tastingId = this.get('currentlyTasting');
       var guessId = material_id;
+      var btn = $("li#" + tastingId + " > button");
 
       // create the answer in the db
       this.add_answer(game, tastingId, material_id);
@@ -35,11 +47,8 @@ export default Ember.ObjectController.extend({
       this.set('currentlyTasting', null);
       this.set('showChoices', false);
 
-      if( guessId === tastingId ) {
-        this.set("correctGuess", true);
-      } else {
-        this.set("correctGuess", false);
-      }
+
+      this.respondToChoice(guessId, tastingId)
     }
   },
 
@@ -70,7 +79,7 @@ export default Ember.ObjectController.extend({
       guessed_material_id: tastingId,
       actual_material_id: guessId,
       game: game,
-      user_id: null
+      user_id: this.get('session.user.id')
     });
 
     answer.save();
@@ -79,5 +88,12 @@ export default Ember.ObjectController.extend({
       answers.pushObject(answer);
       game.save();
     });
+  },
+  respondToChoice: function(guessId, tastingId) {
+    if( guessId === tastingId ) {
+        this.set("correctGuess", true);
+      } else {
+        this.set("correctGuess", false);
+      }
   }
 });

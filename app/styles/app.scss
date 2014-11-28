@@ -1,2 +1,14 @@
 @import 'bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap';
 
+.centered {
+  text-align:center;
+}
+
+.random-material{
+  height: 140px;
+  width: 160px;
+}
+
+.random-material:hover {
+  background: $brand-info;
+}

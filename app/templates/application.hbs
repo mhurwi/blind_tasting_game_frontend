@@ -2,17 +2,19 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <h1 id='title'>Tasting Game</h2>
+      <h1 id='title'>Blind Tasting Bonanza</h2>
     </div>
   </div>
-
+  <hr>
   {{outlet}}
 
 
   {{#if session.user }}
+    <br>
+    <br>
     <div class="row">
       <div class="col-sm-12">
-      <p>{{#link-to 'games' class="btn btn-primary"}}Home{{/link-to}}</p>
+      <p>{{#link-to 'games' class="text-muted"}}Home{{/link-to}}</p>
       </div>
     </div>
   {{/if}}
